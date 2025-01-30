@@ -1,6 +1,11 @@
 import { Col, Container, Nav, Row } from "react-bootstrap";
 
-const Header = () => {
+const Header = ({setFilter, filter}) => {
+
+  const handleFilter =(val)=>{
+    setFilter(val)
+  };
+
   return (
     <header className="bg-light py-4">
       <Container>
@@ -12,13 +17,13 @@ const Header = () => {
           <Col xs={12} md={6} className="text-end">
             <Nav className="justify-content-end">
               <Nav.Item>
-                <Nav.Link href="#" className="text-dark fw-bold text-decoration-underline"> All </Nav.Link>
+                <Nav.Link href="#" className={`text-dark fw-bold ${ filter === "All" ? "text-decoration-underline" : "" }`} onClick={()=>handleFilter("All")}> All </Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link href="#" className="text-dark"> Asia </Nav.Link>
+                <Nav.Link href="#" className={`text-dark fw-bold ${ filter === "Asia" ? "text-decoration-underline" : "" }`} onClick={()=>handleFilter("Asia")}> Asia </Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link href="#" className="text-dark"> Europe </Nav.Link>
+                <Nav.Link href="#" className={`text-dark fw-bold ${ filter === "Europe" ? "text-decoration-underline" : "" }`} onClick={()=>handleFilter("Europe")}> Europe </Nav.Link>
               </Nav.Item>
             </Nav>
           </Col>

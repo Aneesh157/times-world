@@ -5,25 +5,23 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Footer from '../../Common/components/Footer';
 import Header from '../../Common/components/Header';
-import { setCountries } from "../slice";
+import { setCountriesData } from "../slice";
 
 const Home = () => {
   const dispatch = useDispatch();
   const countries = useSelector((state) => state.home.countries);
   const [showItems, setShowItems] = useState(10);
+  const [filter, setFilter] = useState("All");
 
   useEffect(() => {
-    const fetchCountries = async () => {
-      try {
-        const response = await axios.get('https://restcountries.com/v2/all?fields=name,region,flag');
-        dispatch(setCountries(response?.data));
-      } catch (error) {
-        console.error("Error fetching countries:", error);
+    axios.get('https://restcountries.com/v2/all?fields=name,region,flag').then((response) => {
+      let filtered = response.data;
+      if (filter && filter !== "All") {
+        filtered = response.data.filter((country) => country.region === filter);
       }
-    };
-
-    fetchCountries();
-  }, [dispatch]);
+      dispatch(setCountriesData(filtered));
+    });
+  }, [dispatch, filter]);
 
   const handleLoadMore = () => {
     setShowItems((prev) => prev + 10);
@@ -31,7 +29,7 @@ const Home = () => {
 
   return (
     <Container className='p-2'>
-        <Header/>
+        <Header setFilter={setFilter} filter={filter}/>
       <Carousel style={{ border: '1px solid #000', borderRadius: '8px' }} variant="dark">
         {countries?.slice(0, 4).map((item, index) => (
           <Carousel.Item key={index}>

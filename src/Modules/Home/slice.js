@@ -9,12 +9,12 @@ export const homeSlice = createSlice({
   name: 'home',
   initialState,
   reducers: {
-    setCountries:(state, {payload})=>{
+    setCountriesData:(state, {payload})=>{
         _.set(state, "countries", payload);
     } 
   }
 });
 
-export const { setCountries } = homeSlice.actions;
+export const { setCountriesData } = homeSlice.actions;
 
 export default homeSlice.reducer;
