@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import _ from "lodash";
 
 const initialState = {
   countries: []
@@ -9,8 +8,8 @@ export const homeSlice = createSlice({
   name: 'home',
   initialState,
   reducers: {
-    setCountriesData:(state, {payload})=>{
-        _.set(state, "countries", payload);
+    setCountriesData:(state, action)=>{
+        state.countries = action.payload;
     } 
   }
 });
